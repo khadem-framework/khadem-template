@@ -12,15 +12,16 @@ import 'storage.dart';
 class AppConfig {
   static final env = Khadem.env;
 
-  /// 🌱 Default configuration
-  /// All configurations are now modularized in separate files
+  /// Default configuration
   static Map<String, Map<String, dynamic>> get configs => {
         /// Application configuration
         'app': {
           'url': env.getOrDefault('APP_URL', 'http://localhost:9000'),
-          'asset_url': env.get('ASSET_URL'),
+          'env': env.getOrDefault('APP_ENV', 'production'),
+          'locale': env.getOrDefault('APP_LOCALE', 'en'),
           'name': env.getOrDefault('APP_NAME', 'Khadem Video Streaming'),
-          'port': env.getInt('APP_PORT', defaultValue: 3000),
+          'http_port': env.getInt('HTTP_PORT', defaultValue: 9000),
+          'socket_port': env.getInt('SOCKET_PORT', defaultValue: 8080),
         },
 
         /// Database configuration
