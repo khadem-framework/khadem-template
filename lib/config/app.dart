@@ -19,7 +19,7 @@ class AppConfig {
           'url': env.getOrDefault('APP_URL', 'http://localhost:9000'),
           'env': env.getOrDefault('APP_ENV', 'production'),
           'locale': env.getOrDefault('APP_LOCALE', 'en'),
-          'name': env.getOrDefault('APP_NAME', 'Khadem Video Streaming'),
+          'name': env.getOrDefault('APP_NAME', 'Khadem App'),
           'http_port': env.getInt('HTTP_PORT', defaultValue: 9000),
           'socket_port': env.getInt('SOCKET_PORT', defaultValue: 8080),
         },
