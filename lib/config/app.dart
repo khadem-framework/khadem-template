@@ -3,7 +3,6 @@ import 'package:khadem/khadem.dart' show Khadem;
 // Import individual config files
 import 'auth.dart';
 import 'cache.dart';
-import 'cors.dart';
 import 'mail.dart';
 import 'queue.dart';
 import 'scheduler.dart';
@@ -51,9 +50,5 @@ class AppConfig {
         /// Mail configuration
         /// See: lib/config/mail.dart
         'mail': MailConfig.config,
-
-        /// CORS configuration
-        /// See: lib/config/cors.dart
-        'cors': CorsConfig.config,
       };
 }
