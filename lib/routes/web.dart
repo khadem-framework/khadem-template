@@ -1,9 +1,8 @@
-import 'package:khadem/khadem.dart';
+import 'package:khadem/routing.dart' show Router;
 import '../app/http/controllers/home_controller.dart';
 
-void registerRoutes(ServerRouter router) {
-// ✅ Web routes
-  router.get('/', HomeController.welcome);
-  router.get('/home', HomeController.index);
+void registerRoutes(Router router) {
+  router.get('/', HomeController.home);
+  router.get('/welcome', HomeController.welcome);
   router.get('/stream', HomeController.stream);
 }

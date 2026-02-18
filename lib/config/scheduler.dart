@@ -8,13 +8,13 @@ class SchedulerConfig {
           //   'interval': 600,
           //   'retryOnFail': true,
           // },
-          {
-            'name': 'cache_clean_config',
-            'job': 'ttl_cleaner',
-            'interval': 600,
-            'retryOnFail': false,
-            'cachePath': 'storage/cache',
-          },
+          // {
+          //   'name': 'cache_clean_config',
+          //   'job': 'ttl_cleaner',
+          //   'interval': 600,
+          //   'retryOnFail': false,
+          //   'cachePath': 'storage/cache',
+          // },
         ],
       };
 }

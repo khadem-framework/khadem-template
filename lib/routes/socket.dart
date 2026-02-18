@@ -1,8 +1,8 @@
-import 'package:khadem/khadem.dart';
+import 'package:khadem/socket.dart' show SocketServer;
 
 void registerSocketRoutes(SocketServer server) {
   // Socket event: ping
-  server.on('ping', (client, data) {
-    client.send('pong', {'message': 'pong'});
+  server.on('ping', (context) {
+    context.emit('pong', {'message': 'pong'});
   });
 }

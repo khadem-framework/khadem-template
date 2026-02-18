@@ -1,43 +1,41 @@
-import 'package:khadem/khadem.dart'
-    show Khadem, EventMethod, EventSubscriberInterface;
+import 'package:khadem/contracts.dart' show Dispatcher, Subscriber;
+import 'package:khadem/khadem.dart' show Khadem;
 
+import '../events/user_events.dart';
 import '../jobs/send_user_notification_job.dart';
 
-class UserEventsHandler implements EventSubscriberInterface {
+class UserEventsHandler implements Subscriber {
   @override
-  List<EventMethod> getEventHandlers() => [
-        EventMethod(
-          eventName: 'user.created',
-          handler: (payload) async => onCreated(payload),
-        ),
-        EventMethod(
-          eventName: 'user.updated',
-          handler: (payload) async => onUpdated(payload),
-        ),
-        EventMethod(
-          eventName: 'user.deleted',
-          handler: (payload) async => onDeleted(payload),
-        ),
-      ];
+  void subscribe(Dispatcher dispatcher) {
+    dispatcher.listenType(UserCreated, (event) async {
+      await onCreated(event as UserCreated);
+    });
+    dispatcher.listenType(UserUpdated, (event) async {
+      await onUpdated(event as UserUpdated);
+    });
+    dispatcher.listenType(UserDeleted, (event) async {
+      await onDeleted(event as UserDeleted);
+    });
+  }
 
-  Future onCreated(dynamic payload) async {
-    print('📥 User created: ${payload.toJson()}');
+  Future<void> onCreated(UserCreated event) async {
+    print('📥 User created: ${event.payload}');
     await Khadem.queue.dispatch(
       SendUserNotificationJob('New User Created'),
       delay: const Duration(seconds: 5),
     );
   }
 
-  Future onUpdated(dynamic payload) async {
-    print('✏️ User updated: ${payload.toJson()}');
+  Future<void> onUpdated(UserUpdated event) async {
+    print('✏️ User updated: ${event.payload}');
     await Khadem.queue.dispatch(
       SendUserNotificationJob('User Updated'),
       delay: const Duration(seconds: 5),
     );
   }
 
-  Future onDeleted(dynamic payload) async {
-    print('🗑️ User deleted: ${payload.toJson()}');
+  Future<void> onDeleted(UserDeleted event) async {
+    print('🗑️ User deleted: ${event.payload}');
     await Khadem.queue.dispatch(
       SendUserNotificationJob('User Deleted'),
       delay: const Duration(seconds: 5),

@@ -1,16 +1,8 @@
-import 'package:khadem/khadem.dart'
-    show
-        DatabaseServiceProvider,
-        Khadem,
-        LoggingMiddleware,
-        Middleware,
-        MigrationFile,
-        ServiceProvider,
-        SetLocaleMiddleware,
-        QueueServiceProvider,
-        AuthServiceProvider,
-        CoreServiceProvider,
-        CacheServiceProvider,CorsMiddleware;
+import 'package:khadem/contracts.dart'
+    show Middleware, MigrationFile, Seeder, ServiceProvider;
+import 'package:khadem/khadem.dart' show Khadem;
+import 'package:khadem/support.dart'
+    show CacheServiceProvider, CoreServiceProvider, CorsMiddleware, DatabaseServiceProvider, DynamicAppUrlMiddleware, LoggingMiddleware, QueueServiceProvider, SetLocaleMiddleware;
 
 import '../app/providers/app_service_provider.dart';
 import '../app/providers/event_service_provider.dart';
@@ -18,7 +10,7 @@ import '../app/providers/observer_service_provider.dart';
 import '../app/providers/scheduler_service_provider.dart';
 import '../config/app.dart';
 import '../database/migrations/migrations.dart';
- 
+import '../database/seeders/seeders.dart';
 
 class Kernel {
   Kernel._();
@@ -28,17 +20,18 @@ class Kernel {
         CoreServiceProvider(),
         CacheServiceProvider(),
         QueueServiceProvider(),
-        AuthServiceProvider(),
         DatabaseServiceProvider(),
+        // uncomment the following lines to enable these providers
+        // AuthServiceProvider(),
+        // MailServiceProvider(),
       ];
 
   /// Application service providers (user-managed)
   static List<ServiceProvider> get applicationProviders => [
         AppServiceProvider(),
-        EventServiceProvider(),
+        AppEventServiceProvider(),
         SchedulerServiceProvider(),
-        ObserverServiceProvider(), // Register model observers
-        // Add your application service providers here
+        ObserverServiceProvider(),
       ];
 
   /// All service providers combined
@@ -47,19 +40,22 @@ class Kernel {
         ...applicationProviders,
       ];
 
-  /// List of global middlewares
-  static List<Middleware> get middlewares => [
+  /// Global HTTP middlewares
+  static List<Middleware> get middleware => [
+        DynamicAppUrlMiddleware(),
         CorsMiddleware(),
         LoggingMiddleware(),
         SetLocaleMiddleware(),
-        // Add middleware here
       ];
 
-  ///  Configs
-  static final Map<String, Map<String, dynamic>> configs = AppConfig.configs;
+  /// Static Dart configuration maps
+  static Map<String, Map<String, dynamic>> get configs => AppConfig.configs;
 
-  /// Migrations
-  static List<MigrationFile> migrations = migrationsFiles;
+  /// Database migrations
+  static List<MigrationFile> get migrations => migrationsFiles;
+
+  /// Database seeders
+  static List<Seeder> get seeders => seedersList; 
 
   /// Bootstrap the application with all service providers
   static Future<void> bootstrap() async {
@@ -72,20 +68,10 @@ class Kernel {
     // Boot all services
     await Khadem.boot();
 
-    final config = Khadem.config;
-
     // 📦 Register the DB migrations
     Khadem.migrator.registerAll(migrations);
 
     // 📦 Register the DB seeders
-    Khadem.seeder.registerAll([]);
-
-    if (config.get<bool>('database.run_migrations', false)!) {
-      await Khadem.migrator.upAll();
-    }
-
-    if (config.get<bool>('database.run_seeders', false)!) {
-      await Khadem.seeder.runAll();
-    }
+    Khadem.seeder.registerAll(seeders);
   }
 }

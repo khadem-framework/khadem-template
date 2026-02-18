@@ -1,5 +1,6 @@
-import 'package:khadem/khadem.dart';
-import '../models/user.dart';
+import 'package:khadem/contracts.dart' show ContainerInterface, ServiceProvider;
+import 'package:khadem/database/orm.dart';
+ import '../models/user.dart';
 import '../observers/user_observer.dart';
 
 /// Service provider for registering model observers.
@@ -10,15 +11,7 @@ class ObserverServiceProvider extends ServiceProvider {
   @override
   void register(ContainerInterface container) {
     // Register UserObserver for User model
-    KhademModel.observe<User>(UserObserver());
-
-    // You can register multiple observers for the same model
-    // KhademModel.observe<User>(UserAuditObserver());
-    // KhademModel.observe<User>(UserCacheObserver());
-
-    // Register observers for other models
-    // KhademModel.observe<Post>(PostObserver());
-    // KhademModel.observe<Order>(OrderObserver());
+    ObserverRegistry.instance.register<User>(UserObserver());
   }
 
   @override

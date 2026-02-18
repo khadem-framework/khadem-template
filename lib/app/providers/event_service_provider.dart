@@ -1,17 +1,16 @@
-import 'package:khadem/khadem.dart' show ServiceProvider, registerSubscribers;
+import 'package:khadem/contracts.dart' show ContainerInterface;
+import 'package:khadem/support.dart' show EventServiceProvider;
 
 import '../listeners/user_events_handler.dart';
 
-class EventServiceProvider extends ServiceProvider {
+class AppEventServiceProvider extends EventServiceProvider {
   @override
-  void register(container) {
-    final subscribers = [
-      UserEventsHandler(),
-      // add more subscribers here
-    ];
-    registerSubscribers(subscribers);
-  }
+  List<Type> get subscribe => [
+        UserEventsHandler,
+      ];
 
   @override
-  Future<void> boot(container) async {}
+  void register(ContainerInterface container) {
+    container.lazySingleton<UserEventsHandler>((c) => UserEventsHandler());
+  }
 }

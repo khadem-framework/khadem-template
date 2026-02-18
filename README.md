@@ -1,83 +1,106 @@
-# Khadem Dart Template
+﻿# Khadem Template
 
-A Dart web server template built with the Khadem framework, featuring MVC architecture, database migrations, job scheduling, and multilingual support. Perfect for kickstarting scalable web applications.
+ **Kickstart your next Dart web application with the Khadem Framework 2.0.0**
 
-## Features
+A production-ready template for building scalable, maintainable server-side applications in Dart. This template provides a solid foundation with MVC architecture, configured tooling, and essential boilerplate code, so you can focus on building features.
 
-- **MVC Architecture**: Organized structure with controllers, models, views, and routes.
-- **Database Support**: Built-in migrations and seeders for easy database setup.
-- **Job Scheduling**: Background jobs and event listeners for asynchronous tasks.
-- **Multilingual**: Support for Arabic and English translations.
-- **Middleware**: CORS and other HTTP middleware for secure APIs.
-- **Logging**: Configurable logging for development and production.
+> **Note**: This template is compatible with Khadem 2.0.0. If you're upgrading from an earlier version, see the [migration guide](https://khadem-framework.github.io/khadem-docs/migration-guide).
 
-## Getting Started
+##  Features
+
+- ** MVC Architecture**: robust separation of concerns with Controllers, Models, and Views.
+- ** Database Ready**: Integrated ORM with migrations, seeders, and factories.
+- ** Multilingual**: Native support for localization (i18n) (Arabic & English supported out-of-the-box).
+- ** Async Jobs**: Built-in queue system for background processing and scheduled tasks.
+- ** Secure**: Configured middleware for CORS, logging, and request handling.
+- ** Extensible**: Easy to extend with Service Providers and custom middleware.
+
+##  Getting Started
 
 ### Prerequisites
 
-- Dart SDK (>=3.0.0)
-- Khadem CLI (install via `dart pub global activate khadem`)
+- [Dart SDK](https://dart.dev/get-dart) (version 3.0.0 or higher)
+- **Khadem CLI** (Recommended)
+  `ash
+  dart pub global activate khadem
+  `
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/khadem-framework/khadem-template.git
-   cd YOUR_REPO_NAME
-   ```
+1. **Clone the repository** (or create a new project via CLI):
+   `ash
+   git clone https://github.com/khadem-framework/khadem-template.git my-app
+   cd my-app
+   `
 
-2. Install dependencies:
-   ```bash
+2. **Install dependencies**:
+   `ash
    dart pub get
-   ```
+   `
 
-3. Run the server:
-   ```bash
+3. **Start the server**:
+   `ash
+   # Using Khadem CLI (Recommended)
    khadem serve
-   ```
 
-The server will start on `http://localhost:3000` (or your configured port).
+   # Or using standard Dart
+   dart run lib/main.dart
+   `
+   The server will be available at http://localhost:3000.
 
-### Project Structure
+##  Project Structure
 
-```
+A clean, intuitive structure designed for scalability:
+
+`	ext
 lib/
-├── app/
-│   ├── http/
-│   │   ├── controllers/    # Request handlers
-│   │   └── middleware/     # HTTP middleware
-│   ├── jobs/               # Background jobs
-│   ├── listeners/          # Event listeners
-│   ├── models/             # Data models
-│   └── providers/          # Service providers
-├── config/                 # App configuration
-├── core/                   # Core framework files
-├── database/
-│   ├── migrations/         # Database migrations
-│   └── seeders/            # Data seeders
-├── routes/                 # Route definitions
-└── main.dart               # Entry point
+ app/
+    events/             # Domain events
+    http/
+       controllers/    # Request handlers & logic
+       middleware/     # Request interceptors
+    jobs/               # Background tasks & queues
+    listeners/          # Event subscribers
+    models/             # Database entities
+    observers/          # Database lifecycle hooks
+    providers/          # Service injection & setup
+ bootstrap/              # Application startup login
+ config/                 # Configuration files
+ database/
+    migrations/         # Schema definitions
+    seeders/            # Dummy data generators
+ routes/                 # URL definitions
+ main.dart               # App entry point
+`
 
-config/                     # Environment configs
-lang/                       # Translations
-public/                     # Static assets
-resources/views/            # Templates
-storage/logs/               # Logs
-tests/                      # Unit tests
-```
+##  Usage Guide
 
-## Usage
+### Routing
+Define your application routes in lib/routes/web.dart.
+`dart
+Route.get('/hello', (req) => Response.ok('Hello World!'));
+`
 
-- **Controllers**: Handle HTTP requests in `lib/app/http/controllers/`.
-- **Models**: Define data structures in `lib/app/models/`.
-- **Routes**: Configure endpoints in `lib/routes/web.dart` or `lib/routes/socket.dart`.
-- **Migrations**: Run `khadem migrate` to apply database changes.
-- **Jobs**: Schedule tasks in `lib/app/jobs/`.
+### Database & Models
+Database logic resides in lib/app/models/. Use migrations to manage your schema:
+`ash
+khadem migrate
+`
 
-## Contributing
+### Controllers
+Handle business logic in lib/app/http/controllers/.
+`dart
+class UserController extends Controller {
+  Future<Response> index(Request req) async {
+    return view('users.index', {'users': await User.all()});
+  }
+}
+`
 
-Contributions are welcome! Please fork the repository and submit a pull request.
+##  Contributing
 
-## License
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit changes.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+##  License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).

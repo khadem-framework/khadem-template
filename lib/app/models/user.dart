@@ -1,60 +1,37 @@
-import 'package:khadem/khadem.dart'
-    show KhademModel, RelationDefinition, HasRelationships, Timestamps;
+ 
 
-class User extends KhademModel<User> with Timestamps, HasRelationships {
+import 'package:khadem/database/orm.dart';
+
+class User extends KhademModel<User> with Timestamps {
   User({
-    this.name,
-    this.email,
-    this.password,
+    String? name,
+    String? email,
+    String? password,
     int? id,
   }) {
     this.id = id;
+    if (name != null) this.name = name;
+    if (email != null) this.email = email;
+    if (password != null) this.password = password;
   }
 
-  String? name;
-  String? email;
-  String? password;
+  String? get name => getAttribute('name') as String?;
+  set name(String? value) => setAttribute('name', value);
+
+  String? get email => getAttribute('email') as String?;
+  set email(String? value) => setAttribute('email', value);
+
+  String? get password => getAttribute('password') as String?;
+  set password(String? value) => setAttribute('password', value);
 
   @override
-  List<String> get fillable =>
-      ['name', 'email', 'password', 'created_at', 'updated_at'];
+  List<String> get fillable => ['name', 'email', 'password'];
 
   @override
-  List<String> get initialHidden => ['password'];
+  List<String> get hidden => ['password'];
 
   @override
-  List<String> get initialAppends => [];
-
-  @override
-  Map<String, dynamic> get computed => {};
-  @override
-  Object? getField(String key) {
-    return switch (key) {
-      'id' => id,
-      'name' => name,
-      'email' => email,
-      'password' => password,
-      'created_at' => createdAt,
-      'updated_at' => updatedAt,
-      _ => null
-    };
-  }
-
-  @override
-  void setField(String key, dynamic value) {
-    return switch (key) {
-      'id' => id = value,
-      'name' => name = value,
-      'email' => email = value,
-      'password' => password = value,
-      'created_at' => createdAt = value,
-      'updated_at' => updatedAt = value,
-      _ => null
-    };
-  }
-
-  @override
-  Map<String, RelationDefinition> get relations => {
+  Map<String, RelationDefinition> get definedRelations => {
         // 'posts': hasMany<Post>(
         //   foreignKey: 'user_id',
         //   relatedTable: 'posts',

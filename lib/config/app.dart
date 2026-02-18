@@ -3,6 +3,7 @@ import 'package:khadem/khadem.dart' show Khadem;
 // Import individual config files
 import 'auth.dart';
 import 'cache.dart';
+import 'database.dart';
 import 'mail.dart';
 import 'queue.dart';
 import 'scheduler.dart';
@@ -19,13 +20,17 @@ class AppConfig {
           'env': env.getOrDefault('APP_ENV', 'production'),
           'locale': env.getOrDefault('APP_LOCALE', 'en'),
           'name': env.getOrDefault('APP_NAME', 'Khadem App'),
-          'http_port': env.getInt('HTTP_PORT', defaultValue: 9000),
+          // Prefer APP_PORT (matches generated .env.example), fallback to HTTP_PORT.
+          'http_port': env.getInt(
+            'APP_PORT',
+            defaultValue: env.getInt('HTTP_PORT', defaultValue: 9000),
+          ),
           'socket_port': env.getInt('SOCKET_PORT', defaultValue: 8080),
         },
 
         /// Database configuration
         /// See: lib/config/database.dart
-        // 'database': DatabaseConfig.config,
+        'database': DatabaseConfig.config,
 
         /// Cache configuration
         /// See: lib/config/cache.dart
