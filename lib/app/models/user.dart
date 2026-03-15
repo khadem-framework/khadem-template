@@ -5,9 +5,7 @@ class User extends KhademModel<User> with Timestamps {
     String? name,
     String? email,
     String? password,
-    int? id,
   }) {
-    this.id = id;
     if (name != null) this.name = name;
     if (email != null) this.email = email;
     if (password != null) this.password = password;

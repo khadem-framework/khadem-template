@@ -1,106 +1,62 @@
 ﻿# Khadem Template
 
- **Kickstart your next Dart web application with the Khadem Framework 2.0.0**
+**Kickstart your next Dart web application with the Khadem Framework 2.0.0**
 
-A production-ready template for building scalable, maintainable server-side applications in Dart. This template provides a solid foundation with MVC architecture, configured tooling, and essential boilerplate code, so you can focus on building features.
+A production-ready template for building scalable, maintainable server-side applications in Dart. Provides a solid foundation with MVC architecture, configured tooling, and essential boilerplate code.
 
-> **Note**: This template is compatible with Khadem 2.0.0. If you're upgrading from an earlier version, see the [migration guide](https://khadem-framework.github.io/khadem-docs/migration-guide).
+> **Note**: This template is for Khadem 2.0.0. See the [documentation](https://khadem-framework.github.io/khadem-docs/) for more info.
 
-##  Features
-
-- ** MVC Architecture**: robust separation of concerns with Controllers, Models, and Views.
-- ** Database Ready**: Integrated ORM with migrations, seeders, and factories.
-- ** Multilingual**: Native support for localization (i18n) (Arabic & English supported out-of-the-box).
-- ** Async Jobs**: Built-in queue system for background processing and scheduled tasks.
-- ** Secure**: Configured middleware for CORS, logging, and request handling.
-- ** Extensible**: Easy to extend with Service Providers and custom middleware.
-
-##  Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - [Dart SDK](https://dart.dev/get-dart) (version 3.0.0 or higher)
-- **Khadem CLI** (Recommended)
-  `ash
-  dart pub global activate khadem
-  `
 
 ### Installation
 
-1. **Clone the repository** (or create a new project via CLI):
-   `ash
-   git clone https://github.com/khadem-framework/khadem-template.git my-app
-   cd my-app
-   `
+The recommended way to start a new Khadem project is using the CLI:
 
-2. **Install dependencies**:
-   `ash
-   dart pub get
-   `
+```bash
+# Install the Khadem CLI globally
+dart pub global activate khadem
 
-3. **Start the server**:
-   `ash
-   # Using Khadem CLI (Recommended)
-   khadem serve
+# Create a new project
+khadem new --name=my_app
+cd my_app
 
-   # Or using standard Dart
-   dart run lib/main.dart
-   `
-   The server will be available at http://localhost:3000.
+# Start the development server
+khadem serve
+```
 
-##  Project Structure
+Your server will be available at `http://localhost:9000`.
 
-A clean, intuitive structure designed for scalability:
+## 📁 Project Structure
 
-`	ext
+```text
 lib/
- app/
+  app/
     events/             # Domain events
     http/
-       controllers/    # Request handlers & logic
-       middleware/     # Request interceptors
+       controllers/     # Request handlers & logic
+       middleware/      # Request interceptors
     jobs/               # Background tasks & queues
     listeners/          # Event subscribers
     models/             # Database entities
     observers/          # Database lifecycle hooks
     providers/          # Service injection & setup
- bootstrap/              # Application startup login
- config/                 # Configuration files
- database/
+  bootstrap/            # Application startup logic
+  config/               # Configuration files
+  database/
     migrations/         # Schema definitions
     seeders/            # Dummy data generators
- routes/                 # URL definitions
- main.dart               # App entry point
-`
+  routes/               # URL definitions (web.dart, api.dart)
+  main.dart             # App entry point
+```
 
-##  Usage Guide
+## 📚 Learn More
 
-### Routing
-Define your application routes in lib/routes/web.dart.
-`dart
-Route.get('/hello', (req) => Response.ok('Hello World!'));
-`
+For full documentation regarding routing, database ORM, controllers, and services, please visit our **[Official Documentation](https://khadem-framework.github.io/khadem-docs/)**.
 
-### Database & Models
-Database logic resides in lib/app/models/. Use migrations to manage your schema:
-`ash
-khadem migrate
-`
-
-### Controllers
-Handle business logic in lib/app/http/controllers/.
-`dart
-class UserController extends Controller {
-  Future<Response> index(Request req) async {
-    return view('users.index', {'users': await User.all()});
-  }
-}
-`
-
-##  Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to submit changes.
-
-##  License
+## 📄 License
 
 This project is open-sourced software licensed under the [MIT license](LICENSE).
