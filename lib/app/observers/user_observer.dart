@@ -1,4 +1,4 @@
-﻿ import '../models/user.dart';
+import '../models/user.dart';
 import 'package:khadem/database/orm.dart';
 
 class UserObserver extends ModelObserver<User> {

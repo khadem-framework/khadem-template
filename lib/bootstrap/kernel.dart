@@ -2,7 +2,15 @@ import 'package:khadem/contracts.dart'
     show Middleware, MigrationFile, Seeder, ServiceProvider;
 import 'package:khadem/khadem.dart' show Khadem;
 import 'package:khadem/support.dart'
-    show CacheServiceProvider, CoreServiceProvider, CorsMiddleware, DatabaseServiceProvider, DynamicAppUrlMiddleware, LoggingMiddleware, QueueServiceProvider, SetLocaleMiddleware;
+    show
+        CacheServiceProvider,
+        CoreServiceProvider,
+        CorsMiddleware,
+        DatabaseServiceProvider,
+        DynamicAppUrlMiddleware,
+        LoggingMiddleware,
+        QueueServiceProvider,
+        SetLocaleMiddleware;
 
 import '../app/providers/app_service_provider.dart';
 import '../app/providers/event_service_provider.dart';
@@ -55,7 +63,7 @@ class Kernel {
   static List<MigrationFile> get migrations => migrationsFiles;
 
   /// Database seeders
-  static List<Seeder> get seeders => seedersList; 
+  static List<Seeder> get seeders => seedersList;
 
   /// Bootstrap the application with all service providers
   static Future<void> bootstrap() async {

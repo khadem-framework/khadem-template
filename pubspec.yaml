@@ -6,9 +6,7 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  khadem: 
-    path: "D:/Users/Khedr/src/khadem"
-
+  khadem: ^2.0.0
 dev_dependencies:
   test: ^1.29.0
   lints: ^6.0.0
